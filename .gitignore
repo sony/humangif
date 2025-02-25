@@ -1,0 +1,21 @@
+pretrained_models/
+results/
+*.zip
+.vscode/
+.hypothesis/
+__pycache__/
+data/
+exp_output/
+annotator/ckpts/*
+eval_fvd/*
+# *.png
+# *.jpg
+assets/
+*.pdf
+*.mp4
+configs_old
+temp_files
+smpl
+smplx
+DWPose
+pkgs/pretrained_models
