@@ -42,6 +42,7 @@ Create conda environment:
 Install packages with `pip`
 
 ```bash
+  conda install pytorch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 pytorch-cuda=12.1 -c pytorch -c nvidia
   pip install -r requirements.txt
 ```
 
@@ -106,7 +107,7 @@ Finally, these pretrained models should be organized as follows:
 ```
 
 ## Download SMPL Models
-Register and download SMPL (version 1.0.0) and SMPLX (version 1.0) models [here](https://smpl.is.tue.mpg.de/). Put the downloaded models in the folder smpl_models. The folder structure should look like
+Register and download [SMPL]((https://smpl.is.tue.mpg.de/)) (version 1.0.0) and [SMPLX](https://smpl-x.is.tue.mpg.de/) (version 1.0) models. Put the downloaded models in the folder smpl_models. The folder structure should look like
 
 ```
 ./
@@ -195,19 +196,19 @@ Select another small batch of data as the validation set, and modify the `valida
 ### Inference code with RenderPeople dataset
 ```shell
 # Run inference script of novel view
-accelerate launch train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/inference/RenderPeople/stage3_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_module_w_motion_module_nv.yaml
+accelerate launch run_scripts/train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/inference/RenderPeople/stage3_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_module_w_motion_module_nv.yaml
 
 # Run inference script of novel Pose
-accelerate launch train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/inference/RenderPeople/stage3_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_module_w_motion_module_np.yaml
+accelerate launch run_scripts/train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/inference/RenderPeople/stage3_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_module_w_motion_module_np.yaml
 ```
 
 ### Inference code with DNA_Rendering dataset
 ```shell
 # Run inference script of novel view
-accelerate launch train_s3_DNA_Rendering_w_nerf_w_img_loss.py --config configs/inference/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_nv.yaml
+accelerate launch run_scripts/train_s3_DNA_Rendering_w_nerf_w_img_loss.py --config configs/inference/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_nv.yaml
 
 # Run inference script of novel Pose
-python eval_long_video_DNA_Rendering_w_nerf_w_img_loss.py --config configs/inference/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_np.yaml
+python run_scripts/eval_long_video_DNA_Rendering_w_nerf_w_img_loss.py --config configs/inference/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_np.yaml
 ```
 
 
@@ -216,25 +217,25 @@ python eval_long_video_DNA_Rendering_w_nerf_w_img_loss.py --config configs/infer
 ### Training code with RenderPeople dataset
 ```shell
 # Run training script of stage1
-accelerate launch train_s1_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage1_RenderPeople_w_normal_w_nerf_w_img_loss.yaml
+accelerate launch run_scripts/train_s1_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage1_RenderPeople_w_normal_w_nerf_w_img_loss.yaml
 
 # Modify the `stage1_ckpt_dir` value in yaml and run training script of stage2
-accelerate launch train_s2_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage2_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_attention.yaml
+accelerate launch run_scripts/train_s2_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage2_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_attention.yaml
 
 # Modify the `stage1_ckpt_dir` and `view_module_path` value in yaml and run training script of stage3
-accelerate launch train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage3_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention.yaml
+accelerate launch run_scripts/train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage3_RenderPeople_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention.yaml
 ```
 
 ### Training code with DNA_Rendering dataset
 ```shell
 # Run training script of stage1
-accelerate launch train_s1_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage1_DNA_Rendering_w_normal_w_nerf_w_img_loss.yaml
+accelerate launch run_scripts/train_s1_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage1_DNA_Rendering_w_normal_w_nerf_w_img_loss.yaml
 
 # Modify the `stage1_ckpt_dir` value in yaml and run training script of stage2
-accelerate launch train_s2_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage2_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention.yaml
+accelerate launch run_scripts/train_s2_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage2_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention.yaml
 
 # Modify the `stage1_ckpt_dir` and `view_module_path` value in yaml and run training script of stage3
-accelerate launch train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention.yaml
+accelerate launch run_scripts/train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/train/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention.yaml
 ```
 
 # Inference
@@ -242,29 +243,29 @@ accelerate launch train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/tr
 ### Inference code with RenderPeople dataset
 ```shell
 # Run inference script of novel view
-accelerate launch train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/test/RenderPeople/stage3_RenderPeople_w_view_module_w_motion_module_nv.yaml
+accelerate launch run_scripts/train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/test/RenderPeople/stage3_RenderPeople_w_view_module_w_motion_module_nv.yaml
 
 # Run inference script of novel Pose
-accelerate launch train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/test/RenderPeople/stage3_RenderPeople_w_view_module_w_motion_module_np.yaml
+accelerate launch run_scripts/train_s3_RenderPeople_w_nerf_w_img_loss.py --config configs/test/RenderPeople/stage3_RenderPeople_w_view_module_w_motion_module_np.yaml
 ```
 
 ### Inference code with DNA_Rendering dataset
 ```shell
 # Run inference script of novel view
-accelerate launch train_s3_DNA_Rendering_w_nerf_w_img_loss.py --config configs/test/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_nv.yaml
+accelerate launch run_scripts/train_s3_DNA_Rendering_w_nerf_w_img_loss.py --config configs/test/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_nv.yaml
 
 # Run inference script of novel Pose
-python eval_long_video_DNA_Rendering_w_nerf_w_img_loss.py --config configs/test/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_np.yaml
+python run_scripts/eval_long_video_DNA_Rendering_w_nerf_w_img_loss.py --config configs/test/DNA_Rendering/stage3_DNA_Rendering_w_normal_w_nerf_w_img_loss_w_view_attention_w_motion_attention_np.yaml
 ```
 
 # Evaluation Metric
 Follow evaluation scripts from [DISCO](https://github.com/Wangt-CN/DisCo) to calculate metrics
 ```shell
 # Run inference script of novel view
-bash gen_eval_nv.sh $folder
+bash run_scripts/gen_eval_nv.sh $folder
 
 # Run inference script of novel Pose
-bash gen_eval_nv.sh $folder
+bash run_scripts/gen_eval_nv.sh $folder
 ```
 
 # Citation

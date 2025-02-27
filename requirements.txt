@@ -224,11 +224,9 @@ toml==0.10.2
 tomli==2.0.1
 tomlkit==0.12.0
 toolz==0.12.1
-torch==2.2.2+cu121
 torch-fidelity==0.3.0
 torchmetrics==1.2.1
 torchsummary==1.5.1
-torchvision==0.17.2
 tornado==6.4.1
 tqdm==4.66.4
 traitlets==5.14.3
