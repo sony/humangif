@@ -51,7 +51,6 @@ class MultiGuidance2ImagePipeline(DiffusionPipeline):
         guidance_encoder_hrnet=None,
         guidance_encoder_nerf=None,
         NeRF_renderer=None,
-        refine_model=None,
         nerf_cond_type=None,
         use_diff_img_loss=False,
     ):
@@ -63,7 +62,6 @@ class MultiGuidance2ImagePipeline(DiffusionPipeline):
             reference_unet=reference_unet,
             denoising_unet=denoising_unet,
             NeRF_renderer=NeRF_renderer,
-            refine_model=refine_model,
             guidance_encoder_depth=guidance_encoder_depth,
             guidance_encoder_normal=guidance_encoder_normal,            
             guidance_encoder_semantic_map=guidance_encoder_semantic_map,
@@ -379,17 +377,12 @@ class MultiGuidance2ImagePipeline(DiffusionPipeline):
         if not return_dict:
             return image
 
-        if self.use_diff_img_loss or self.refine_model is not None:
+        if self.use_diff_img_loss:
             latents_ = 1 / 0.18215 * latents
             latents_ = rearrange(latents_, "b c f h w -> (b f) c h w")
             rgb_diff_pred = self.vae.decode(latents_).sample
             rgb_diff_pred = (rgb_diff_pred / 2 + 0.5).clamp(0, 1)
-            if self.refine_model is not None:
-                feature_image = torch.cat([feature_nerf_image_crop[:, :3], rgb_diff_pred], dim=1)
-                rgb_refine_pred = self.refine_model(feature_image * 2 - 1)
-            else:
-                rgb_refine_pred = None
-            return image, feature_nerf_image[:, :3], rgb_refine_pred
+            return image, feature_nerf_image[:, :3], None
 
         if batch_data_nerf is not None:
             return image, feature_nerf_image[:, :3], None

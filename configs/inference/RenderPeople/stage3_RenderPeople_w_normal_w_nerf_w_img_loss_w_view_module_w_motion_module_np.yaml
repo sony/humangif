@@ -22,9 +22,6 @@ NeRF:
   depth_resolution: 48
   smpl_type: 'smpl'
 
-# refine model
-use_refine_model: False
-
 # use img loss
 use_diff_img_loss: False
 

@@ -11,9 +11,6 @@ NeRF:
   nerf_cond_type: '480_480_upscale'
   depth_resolution: 48
 
-# refine model
-use_refine_model: False
-
 # use img loss
 use_diff_img_loss: True
 

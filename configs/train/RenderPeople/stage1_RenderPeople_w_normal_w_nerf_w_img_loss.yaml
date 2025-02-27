@@ -13,15 +13,7 @@ NeRF:
   use_smpl_dist_mask: True
   smpl_type: smpl
   depth_resolution: 48
-  # lr
-  learning_rate: 4e-3
-  lr_scheduler: 'piecewise_constant'
-  learning_rate_refine_model: 1e-3
-  lr_scheduler_refine_model: 'constant'
   nerf_cond_type: '512_512_3'
-
-# refine model
-use_refine_model: False
 
 # use img loss
 use_diff_img_loss: True

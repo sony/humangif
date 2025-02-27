@@ -1339,7 +1339,6 @@ def main(cfg):
         )
         
     NeRF_renderer = NeRF_Renderer(use_smpl_dist_mask=cfg.NeRF.use_smpl_dist_mask, smpl_type=cfg.NeRF.smpl_type, nerf_cond_type=cfg.NeRF.nerf_cond_type, depth_resolution=cfg.NeRF.depth_resolution, white_bg=False)
-    if cfg.use_refine_model: refine_model = LightTextUNet(n_in=6)
 
     sched_kwargs = OmegaConf.to_container(cfg.noise_scheduler_kwargs)
     if cfg.enable_zero_snr:
@@ -1442,7 +1441,6 @@ def main(cfg):
         reference_control_reader,
         guidance_encoder_group,
         NeRF_renderer=NeRF_renderer,
-        refine_model=refine_model if cfg.use_refine_model else None,
         nerf_cond_type=cfg.NeRF.nerf_cond_type,
         use_diff_img_loss=cfg.use_diff_img_loss,
     )

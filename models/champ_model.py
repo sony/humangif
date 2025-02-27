@@ -14,7 +14,6 @@ class HumanDiffModel(nn.Module):
         reference_control_reader,
         guidance_encoder_group,
         NeRF_renderer=None,
-        refine_model=None,
         nerf_cond_type=None,
         use_diff_img_loss=False
     ):
@@ -40,8 +39,6 @@ class HumanDiffModel(nn.Module):
 
         if NeRF_renderer is not None:
             self.NeRF_renderer = NeRF_renderer
-
-        self.refine_model = refine_model
 
         self.nerf_cond_type = nerf_cond_type
         self.use_diff_img_loss = use_diff_img_loss
@@ -174,17 +171,12 @@ class HumanDiffModel(nn.Module):
             rgb_diff_pred = vae.decode(latents_).sample
             if not torch.isnan(rgb_diff_pred).any() and not torch.isinf(rgb_diff_pred).any(): 
                 rgb_diff_pred = torch.clamp(rgb_diff_pred, min=-1, max=1)
-                if self.refine_model is not None:
-                    feature_image = torch.cat([feature_nerf_image_crop[:, :3] * 2 - 1, rgb_diff_pred], dim=1)
-                    rgb_refine_pred = self.refine_model(feature_image)
-                else:
-                    rgb_refine_pred = None
             else:
-                rgb_diff_pred, rgb_refine_pred = rgb_diff_pred, None
+                rgb_diff_pred = rgb_diff_pred
 
         if batch_data_nerf is not None:
-            if self.refine_model is not None or self.use_diff_img_loss:
-                return model_pred, feature_nerf_image[:, :3], weights_nerf_image, rgb_diff_pred, rgb_refine_pred
+            if self.use_diff_img_loss:
+                return model_pred, feature_nerf_image[:, :3], weights_nerf_image, rgb_diff_pred, None
             else:
                 return model_pred, feature_nerf_image[:, :3], weights_nerf_image, None, None
         else:

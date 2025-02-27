@@ -682,7 +682,6 @@ def main(cfg):
         reference_control_reader,
         guidance_encoder_group,
         NeRF_renderer=NeRF_renderer,
-        refine_model=None,
         nerf_cond_type=cfg.NeRF.nerf_cond_type,
         use_diff_img_loss=cfg.use_diff_img_loss,
     )
